@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-
 import TeamsServices from '../services/TeamsServices';
 
 class TeamsControllers {
