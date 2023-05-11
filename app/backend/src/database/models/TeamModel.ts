@@ -13,12 +13,12 @@ Teams.init({
   },
   teamName: {
     type: STRING,
-    field: 'team-name',
-  }, 
+    field: 'team_name',
+  },
 }, {
   underscored: true,
   sequelize: db,
-  modelName: 'teams',  //é o nome como está no bd.
+  modelName: 'teams', // é o nome como está no bd.
   timestamps: false,
 });
 

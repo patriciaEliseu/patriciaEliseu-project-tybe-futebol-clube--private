@@ -1,4 +1,6 @@
 import { Options } from 'sequelize';
+console.log(process.env);
+
 
 const config: Options = {
   username: process.env.DB_USER || 'root',
