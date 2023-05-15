@@ -1,11 +1,13 @@
-// import * as express from 'express';
-// import TeamsControllers from '../controllers/TeamsControllers';
+import * as express from 'express';
+import LoginControllers from '../controllers/LoginControllers';
+import validateLogin from '../middlewares/validateLogin';
 
-// const router = express.Router();
-// const teamsControllers = new TeamsControllers();
+const router = express.Router();
 
-// // para prender (bind) o this.da minha classe teamsContrellers e não da classe do express.
-// router.get('/', (req, res) => teamsControllers.getAllTeams(req, res));
+const loginControllers = new LoginControllers();
+
+// para prender (bind) o this.da minha classe teamsContrellers e não da classe do express.
+router.post('/', validateLogin, (req, res) => loginControllers.createLogin(req, res));
 // router.get('/:id', (req, res) => teamsControllers.getByIdTeams(req, res));
 
-// export default router;
+export default router;
