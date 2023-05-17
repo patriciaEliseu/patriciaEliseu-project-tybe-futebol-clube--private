@@ -1,8 +1,14 @@
-const loginMock =
+
+
+
+
+const user =
 {
-   'token': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-  .eyJkYXRhIjp7ImVtYWlsIjoidXNlckB1c2VyLmNvbSIsInJvbGUiOiJ1c2VyIn0sImlhdCI6MTY4NDI2MDk1Nn0
-  .eeqIkvOUSIWBjNwT5W4pQXXChaYSAyjNkpsI1Tfi4qY`
+  username: 'Admin',
+  role: 'admin',
+  email: 'admin@admin.com',
+  password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+    // senha: secret_admin
 }
 
-export {loginMock};
+export {user};

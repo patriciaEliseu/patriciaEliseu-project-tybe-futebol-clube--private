@@ -8,6 +8,6 @@ const loginControllers = new LoginControllers();
 
 // para prender (bind) o this.da minha classe teamsContrellers e não da classe do express.
 router.post('/', validateLogin, (req, res) => loginControllers.createLogin(req, res));
-// router.get('/:id', (req, res) => teamsControllers.getByIdTeams(req, res));
+// router.get('/role', (req, res) => loginControllers.getRole(req, res));
 
 export default router;

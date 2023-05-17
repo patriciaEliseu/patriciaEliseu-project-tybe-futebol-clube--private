@@ -2,11 +2,15 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
-
+import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
 import { app } from '../app';
-import Team from '../database/models/TeamModel';
-import { teamsMock } from './teamsMock';
-// import { Response } from 'superagent';
+import UserModel from '../database/models/UserModel';
+import {  user } from './loginMock';
+import { send } from 'process';
+import LoginServices from '../services/LoginServices';
+import { Response } from 'superagent';
+// import { after, before } from 'node:test';
 
 
 chai.use(chaiHttp);
@@ -14,42 +18,22 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 
-describe('Teste de integração usando getAll em /teams', function()  {
-  describe('list all teams and status 200', function() {
+describe('Teste de integração usando createLogin em /login', function()  {
+  describe('list token and status 200', function() {
     afterEach(() => {
       sinon.restore();
     });
-  it('Should return all teams', async function() {
-   
-   const response = await chai
-    .request(app)
-    .get('/teams');
-   expect(response.status).to.be.equal(200);
-   expect(response.body).to.deep.equal(teamsMock);
+    })
+  it('Should return Token', async function() {
+    sinon.stub(UserModel, 'findOne').resolves(user as any) 
+    sinon.stub(bcrypt, 'compareSync').returns(true)
+    const tockMock = sinon.mock(jwt).expects('sign').returns('token');
+    const response = await chai
+      .request(app)
+      .post('/login').send({ email: 'admin@admin.com',
+      password: 'secret_admin'
+        });
+        expect(response.status).to.be.equal(200);
+        expect(response.body).to.be.deep.equal({ token:'token' });
   });
-});
-});
-
-describe('Teste de integração usando getById em /teams/:id', function()  {
-  describe('list all teams and status 200', function() {
-    afterEach(() => {
-      sinon.restore();
-    });
-  it('Should return team id: 2', async function() {
-   
-   const response = await chai
-    .request(app)
-    .get('/teams/2');
-   expect(response.status).to.be.equal(200);
-   expect(response.body).to.deep.equal(teamsMock[1]);
-  });
-  // it('Should not return team id:120, because does not exist', async function() {
-   
-  //   const response = await chai
-  //    .request(app)
-  //    .get('/teams/120');
-  //   expect(response.status).to.be.equal(500);
-  //   expect(response.body).to.deep.equal({ message: 'Deu errado' });
-  //  });
-});
 });
