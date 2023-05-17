@@ -6,7 +6,7 @@ import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { app } from '../app';
 import UserModel from '../database/models/UserModel';
-import {  user } from './loginMock';
+import {  user } from './mock/loginMock';
 import { send } from 'process';
 import LoginServices from '../services/LoginServices';
 import { Response } from 'superagent';

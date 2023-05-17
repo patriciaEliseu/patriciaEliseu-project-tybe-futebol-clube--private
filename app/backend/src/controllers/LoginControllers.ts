@@ -2,6 +2,7 @@ import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import LoginServices from '../services/LoginServices';
+// import 'dotenv/config';
 
 interface ILogin {
   email: string,
@@ -15,6 +16,7 @@ class LoginControllers {
   constructor() {
     this.loginServices = new LoginServices();
     this.createLogin = this.createLogin.bind(this);
+    this.getRole = this.getRole.bind(this);
   }
 
   async createLogin(req: Request, res: Response): Promise<Response | void> {
@@ -33,6 +35,12 @@ class LoginControllers {
     } catch (error) {
       return res.status(500).json({ message: (error as Error).message });
     }
+  }
+
+  async getRole(_req: Request, res: Response): Promise<Response> {
+    const { payload } = res.locals;
+    console.log(this);
+    return res.status(200).json({ role: payload.data.role });
   }
 }
 
