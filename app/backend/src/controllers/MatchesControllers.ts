@@ -7,6 +7,7 @@ export default class MatchesControllers {
   constructor() {
     this.matchesServices = new MatchesServices();
     this.getAllMatches = this.getAllMatches.bind(this);
+    this.finish = this.finish.bind(this);
   }
 
   async getAllMatches(req: Request, res: Response): Promise<void> {
@@ -17,5 +18,11 @@ export default class MatchesControllers {
     } catch (error) {
       res.status(404).json({ message: 'Not found' });
     }
+  }
+
+  async finish(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    await this.matchesServices.finish(Number(id));
+    res.status(200).json({ message: 'Finished' });
   }
 }

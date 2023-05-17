@@ -25,6 +25,15 @@ class MatchesServices {
     });
     return data;
   }
+
+  async finish(id: number) {
+    await this.model.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+    const matchefinish = await this.model.findByPk(id);
+    return matchefinish;
+  }
 }
 
 export default MatchesServices;
