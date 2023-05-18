@@ -8,7 +8,7 @@ const matchesControllers = new MatchesControllers();
 
 router.get('/', (req, res) => matchesControllers.getAllMatches(req, res));
 router.patch('/:id/finish', validateToken, (req, res) => matchesControllers.finish(req, res));
-router.patch('/:id', validateToken, matchesControllers.update);
-// router.post('/', validateToken, matchesControllers.createMatche);
+router.patch('/:id', validateToken, (req, res) => matchesControllers.update(req, res));
+router.post('/', validateToken, matchesControllers.createMatche);
 
 export default router;

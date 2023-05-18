@@ -1,5 +1,6 @@
 import MatcheModel from '../database/models/MatcheModel';
 import Team from '../database/models/TeamModel';
+import IMatche from '../interfaces/matche.interface';
 
 class MatchesServices {
   model = MatcheModel;
@@ -40,6 +41,22 @@ class MatchesServices {
       { homeTeamGoals, awayTeamGoals },
       { where: { id } },
     );
+  }
+
+  async createMatche(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ) {
+    const data = await this.model.create({
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+      inProgress: true,
+    }) as IMatche;
+    return data;
   }
 }
 
