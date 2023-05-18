@@ -4,8 +4,9 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Team from '../database/models/TeamModel';
-import { teamsMock } from './mock/teamsMock';
+import MatcheModel from '../database/models/MatcheModel';
+// import Team from '../database/models/TeamModel';
+// import { teamsMock } from './teamsMock';
 // import { Response } from 'superagent';
 
 
@@ -14,16 +15,16 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 
-describe('Teste de integração usando getAll em /teams', function()  {
-  describe('list all teams and status 200', function() {
+describe('Teste de integração usando getAll with matches inProgress true em /matches', function()  {
+  describe('list matches with inProgress true and status 200', function() {
     afterEach(() => {
       sinon.restore();
     });
-  it('Should return all teams', async function() {
+  it('Should return matches', async function() {
    
    const response = await chai
     .request(app)
-    .get('/teams');
+    .get('/matches');
    expect(response.status).to.be.equal(200);
    expect(response.body).to.deep.equal(teamsMock);
   });
