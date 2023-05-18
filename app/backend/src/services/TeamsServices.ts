@@ -4,9 +4,9 @@ import Team from '../interfaces/team.interface';
 class TeamsServices {
   model = TeamModel;
 
-  constructor() {
-    this.model = TeamModel;
-  }
+  // constructor() {
+  //   // this.model = TeamModel;
+  // }
 
   async getAllTeams(): Promise<Team[]> {
     const teams = await this.model.findAll();
@@ -14,6 +14,7 @@ class TeamsServices {
   }
 
   async getByIdTeams(id: number): Promise<Team | null> {
+    console.log('thissss', TeamModel);
     const idTeam = await this.model.findByPk(id);
     return idTeam;
   }

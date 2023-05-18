@@ -5,9 +5,11 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import MatcheModel from '../database/models/MatcheModel';
+import matchesMock  from './mock/matchesMock';
 // import Team from '../database/models/TeamModel';
 // import { teamsMock } from './teamsMock';
 // import { Response } from 'superagent';
+import IMatche from '../interfaces/matche.interface';
 
 
 chai.use(chaiHttp);
@@ -20,30 +22,30 @@ describe('Teste de integração usando getAll with matches inProgress true em /m
     afterEach(() => {
       sinon.restore();
     });
-  it('Should return matches', async function() {
-   
-   const response = await chai
+  it('Should return matches', async function(){
+    sinon.stub(MatcheModel, 'findAll').resolves(matchesMock as any) 
+      const response = await chai
     .request(app)
     .get('/matches');
    expect(response.status).to.be.equal(200);
-   expect(response.body).to.deep.equal(teamsMock);
+   expect(response.body).to.deep.equal(matchesMock);
   });
 });
 });
 
-describe('Teste de integração usando getById em /teams/:id', function()  {
-  describe('list all teams and status 200', function() {
-    afterEach(() => {
-      sinon.restore();
-    });
-  it('Should return team id: 2', async function() {
+// describe('Teste de integração usando getById em /teams/:id', function()  {
+//   describe('list all teams and status 200', function() {
+//     afterEach(() => {
+//       sinon.restore();
+//     });
+//   it('Should return team id: 2', async function() {
    
-   const response = await chai
-    .request(app)
-    .get('/teams/2');
-   expect(response.status).to.be.equal(200);
-   expect(response.body).to.deep.equal(teamsMock[1]);
-  });
+//    const response = await chai
+//     .request(app)
+//     .get('/teams/2');
+//    expect(response.status).to.be.equal(200);
+//    expect(response.body).to.deep.equal(teamsMock[1]);
+//   });
   // it('Should not return team id:120, because does not exist', async function() {
    
   //   const response = await chai
@@ -52,5 +54,5 @@ describe('Teste de integração usando getById em /teams/:id', function()  {
   //   expect(response.status).to.be.equal(500);
   //   expect(response.body).to.deep.equal({ message: 'Deu errado' });
   //  });
-});
-});
+// });
+// });

@@ -12,7 +12,6 @@ export default class MatchesControllers {
     this.update = this.update.bind(this);
     this.createMatche = this.createMatche.bind(this);
     this.teamsServices = new TeamsServices();
-    this.teamsServices.getByIdTeams = this.teamsServices.getByIdTeams.bind(this);
   }
 
   async getAllMatches(req: Request, res: Response): Promise<void> {
@@ -38,21 +37,21 @@ export default class MatchesControllers {
     res.status(200).json({ homeTeamGoals, awayTeamGoals });
   }
 
-  async createMatche(req: Request, res: Response): Promise<void> {
+  async createMatche(req: Request, res: Response): Promise<Response> {
     const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals,
     } = req.body;
     if (homeTeamId === awayTeamId) {
-      res.status(422).json({
+      return res.status(422).json({
         message: 'It is not possible to create a match with two equal teams' });
     }
-    try {
-      await this.teamsServices.getByIdTeams(homeTeamId);
-      await this.teamsServices.getByIdTeams(awayTeamId);
-    } catch (error) {
-      res.status(404).json({ message: 'There is no team with such id!' });
-    }
+
+    await this.teamsServices.getByIdTeams(homeTeamId);
+    await this.teamsServices.getByIdTeams(awayTeamId);
+
+    // return res.status(404).json({ message: 'There is no team with such id!' });
+
     const newMatch = await this.matchesServices
       .createMatche(homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals);
-    res.status(201).json(newMatch);
+    return res.status(201).json(newMatch);
   }
 }
