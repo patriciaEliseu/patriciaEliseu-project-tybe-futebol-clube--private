@@ -14,7 +14,7 @@ class TeamsServices {
   }
 
   async getByIdTeams(id: number): Promise<Team | null> {
-    console.log('thissss', TeamModel);
+    // console.log('thissss', TeamModel);
     const idTeam = await this.model.findByPk(id);
     return idTeam;
   }

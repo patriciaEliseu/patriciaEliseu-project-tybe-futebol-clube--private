@@ -27,6 +27,16 @@ class MatchesServices {
     return data;
   }
 
+  async getAll(id: number) {
+    const teamsHome = await this.model.findAll({
+      where: { homeTeamId: id, inProgress: false },
+      include: [
+        { model: Team, as: 'homeTeam', attributes: { exclude: ['id'] },
+        }],
+    });
+    return teamsHome;
+  }
+
   async finish(id: number) {
     await this.model.update(
       { inProgress: false },
