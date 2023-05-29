@@ -27,6 +27,7 @@ class MatchesServices {
     return data;
   }
 
+  // req 24
   async getAll(id: number) {
     const teamsHome = await this.model.findAll({
       where: { homeTeamId: id, inProgress: false },

@@ -26,7 +26,9 @@ export default class LeaderboardServices {
         totalLosses: LeaderboardServices.calculateLoser(mHome),
         goalsFavor: LeaderboardServices.goalFavor(mHome),
         goalsOwn: LeaderboardServices.goalsOwn(mHome),
-
+        goalsBalance: LeaderboardServices.goalFavor(mHome) - LeaderboardServices.goalsOwn(mHome),
+        efficiency: LeaderboardServices
+          .calculateEfficiency(LeaderboardServices.calculatePoint(mHome), mHome.length),
       };
     }));
     return lbscoreboard;
@@ -60,7 +62,7 @@ export default class LeaderboardServices {
 
   static calculateDraw(matche: IMatche[]) {
     const draw = matche.reduce((acc, curri) => {
-      if (curri.homeTeamGoals > curri.awayTeamGoals) {
+      if (curri.homeTeamGoals === curri.awayTeamGoals) {
         return acc + 1;
       }
       return acc;
@@ -70,7 +72,7 @@ export default class LeaderboardServices {
 
   static calculateLoser(matche: IMatche[]) {
     const loser = matche.reduce((acc, curre) => {
-      if (curre.homeTeamGoals > curre.awayTeamGoals) {
+      if (curre.awayTeamGoals > curre.homeTeamGoals) {
         return acc + 1;
       }
       return acc;
@@ -87,5 +89,10 @@ export default class LeaderboardServices {
   static goalsOwn(matche: IMatche[]) {
     const goal = matche.reduce((acc, curre) => acc + curre.awayTeamGoals, 0);
     return goal;
+  }
+
+  static calculateEfficiency(totalPoints: number, totalGames: number) {
+    const efficiency = (totalPoints / (totalGames * 3)) * 100;
+    return efficiency.toFixed(2);
   }
 }
