@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import ILeaderboard from '../interfaces/leaderboard.interface';
-import LeaderbAwayEHomeServices from '../services/LeaderbAwayEHomeServices';
+import LeaderbAwayEHomeServices from '../services/LbAeHServices';
 
 class LeaderbAwayEHomeControllers {
   leaderbAwayHomeServices: LeaderbAwayEHomeServices;
@@ -11,7 +11,7 @@ class LeaderbAwayEHomeControllers {
 
   static async resultSort() {
     const leaderbAwayEHomeServices = new LeaderbAwayEHomeServices();
-    const resutFindAllAeH = await leaderbAwayEHomeServices.getAllAeH();
+    const resutFindAllAeH = await leaderbAwayEHomeServices.getAllHome();
     if (resutFindAllAeH) {
       const result = await resutFindAllAeH.sort((a: ILeaderboard, b: ILeaderboard) => {
       // Ordenar pelo Total de Pontos (decrescente)
