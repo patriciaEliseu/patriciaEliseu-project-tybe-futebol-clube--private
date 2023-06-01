@@ -1,19 +1,19 @@
 import { Request, Response } from 'express';
 import ILeaderboard from '../interfaces/leaderboard.interface';
-import LeaderdbAwayServices from '../services/LeaderbAwayServices';
+import LeaderbAwayEHomeServices from '../services/LeaderbAwayEHomeServices';
 
-class LeaderbAwayControllers {
-  leaderbAwayServices: LeaderdbAwayServices;
+class LeaderbAwayEHomeControllers {
+  leaderbAwayHomeServices: LeaderbAwayEHomeServices;
 
   constructor() {
-    this.leaderbAwayServices = new LeaderdbAwayServices();
+    this.leaderbAwayHomeServices = new LeaderbAwayEHomeServices();
   }
 
-  static async resultSortAway() {
-    const leaderbAwayServices = new LeaderdbAwayServices();
-    const resutFindAllAway = await leaderbAwayServices.getAllAway();
-    if (resutFindAllAway) {
-      const result = await resutFindAllAway.sort((a: ILeaderboard, b: ILeaderboard) => {
+  static async resultSort() {
+    const leaderbAwayEHomeServices = new LeaderbAwayEHomeServices();
+    const resutFindAllAeH = await leaderbAwayEHomeServices.getAllAeH();
+    if (resutFindAllAeH) {
+      const result = await resutFindAllAeH.sort((a: ILeaderboard, b: ILeaderboard) => {
       // Ordenar pelo Total de Pontos (decrescente)
         if (a.totalPoints !== b.totalPoints) return b.totalPoints - a.totalPoints;
         // Ordenar pelo Total de Vitórias (decrescente)
@@ -23,16 +23,19 @@ class LeaderbAwayControllers {
         // Ordenar pelos Gols a Favor (decrescente)
         return b.goalsFavor - a.goalsFavor;
       });
+      console.log('judassssssssss', result);
       return result;
     }
+    return resutFindAllAeH;
   }
 
-  static async getAllAway(req: Request, res: Response) {
-    const result = await LeaderbAwayControllers.resultSortAway();
+  static async getAllAeH(req: Request, res: Response) {
+    const result = await LeaderbAwayEHomeControllers.resultSort();
     res.status(200).json(result);
   }
 }
-export default LeaderbAwayControllers;
+
+export default LeaderbAwayEHomeControllers;
 
 // instanciar a classe
 // new nome-da-classe()

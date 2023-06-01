@@ -50,6 +50,21 @@ class MatchesServices {
     return teamAway;
   }
 
+  // req 29
+  async getAllAeH(id: number) {
+    const teamAeH = await this.model.findAll({
+      where: { id, inProgress: false },
+      include: [
+        { model: Team, as: 'awayTeam', attributes: { exclude: ['id'] },
+        },
+        { model: Team, as: 'homeTeam', attributes: { exclude: ['id'] },
+        },
+      ],
+    });
+    // console.log(teamAeH);
+    return teamAeH;
+  }
+
   async finish(id: number) {
     await this.model.update(
       { inProgress: false },
